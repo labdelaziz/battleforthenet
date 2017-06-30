@@ -21,5 +21,5 @@ script:
 - make bftn
 - make july12
 - git commit -a --author="Travis Script <>" -m "building static assets"
-- if [[ ${TRAVIS_BRANCH} == "master" ]] && [[ ${TRAVIS_PULL_REQUEST} == "false" ]]; then git push --quiet "https://${GH_TOKEN}@${GH_REF}" +${PUBLISH_BRANCH}; fi
-- if [[ ${TRAVIS_BRANCH} == "master" ]] && [[ ${TRAVIS_PULL_REQUEST} == "false" ]]; then mkdir -p $(dirname ${DOCKER_CACHE_FILE}) ; docker save $(docker history -q ${DOCKER_REPOSITORY}:${TRAVIS_COMMIT} | grep -v '<missing>') | gzip > ${DOCKER_CACHE_FILE}; fi
+- if [[ ${TRAVIS_BRANCH} == "page-builder" ]] && [[ ${TRAVIS_PULL_REQUEST} == "false" ]]; then git push --quiet "https://${GH_TOKEN}@${GH_REF}" +${PUBLISH_BRANCH}; fi
+- if [[ ${TRAVIS_BRANCH} == "page-builder" ]] && [[ ${TRAVIS_PULL_REQUEST} == "false" ]]; then mkdir -p $(dirname ${DOCKER_CACHE_FILE}) ; docker save $(docker history -q ${DOCKER_REPOSITORY}:${TRAVIS_COMMIT} | grep -v '<missing>') | gzip > ${DOCKER_CACHE_FILE}; fi
