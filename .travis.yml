@@ -1,6 +1,7 @@
 branches:
   only:
     - master
+    - page-builder
 sudo: required
 cache:
   directories:
