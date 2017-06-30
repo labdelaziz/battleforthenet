@@ -17,7 +17,7 @@ env:
     - DOCKER_REPOSITORY=fftf
     - PUBLISH_BRANCH=test-pages
 script:
-- git branch -D ${PUBLISH_BRANCH}
+- git branch -D ${PUBLISH_BRANCH} | true
 - git checkout -b ${PUBLISH_BRANCH}
 - make bftn
 - make july12
