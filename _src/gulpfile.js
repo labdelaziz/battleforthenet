@@ -6,21 +6,38 @@ var source = require('vinyl-source-stream');
 var sourcemaps = require('gulp-sourcemaps');
 var watchify = require('watchify');
 
-var bundler = watchify(browserify('./js/index.js', watchify.args));
 
-bundler.transform('brfs');
+var bundler = browserify({
+  entries: './js/index.js',
+  cache: {},
+  packageCache: {}
+});
 
-gulp.task('js', bundle); // Add task: 'gulp js'
-bundler.on('update', bundle); // Bundle when dependencies are updated
 
-function onError(e) {
-    console.log(e.toString());
+function bundle(b) {
+  return b
+    .transform('brfs')
+    .bundle()
+    .on('error', function(err) {
+      console.log(err.toString());
+    })
+    .pipe(source('battle.js'))
+    .pipe(gulp.dest('../js/'));
 }
 
-function bundle() {
-    console.log('Bundling');
-    return bundler.bundle()
-        .on('error', onError) // Log errors
-        .pipe(source('battle.js'))
-        .pipe(gulp.dest('../js/'));
-}
+
+gulp.task('js', function() {
+  console.log("building js");
+  return bundle(bundler);
+});
+
+
+gulp.task('watch', function() {
+  console.log("watching js");
+  var w = watchify(bundler);
+  w.on('update', function() {
+    console.log("updating");
+    return bundle(w);
+  });
+  return bundle(w);
+});

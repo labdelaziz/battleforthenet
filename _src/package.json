@@ -4,7 +4,8 @@
   "description": "",
   "main": "gulpfile.js",
   "scripts": {
-    "start": "gulp js",
+    "start": "gulp watch",
+    "build": "gulp js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Chris Antaki",
